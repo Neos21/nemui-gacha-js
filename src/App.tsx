@@ -160,7 +160,9 @@ export default class App extends React.Component {
         <div className="app">
           {header}
           <main className="loading">
-            <div>Loading...</div>
+            <div className="progress-wrapper">
+              <div className="progress">Loading...</div>
+            </div>
           </main>
           {footer}
         </div>

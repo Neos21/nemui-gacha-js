@@ -11,6 +11,13 @@ __[Enter This Website.](https://Neos21.github.io/nemui-gacha-js/)__
     - ex. <https://neos21.github.io/nemui-gacha-js/?q=ねむい&force=true>
 
 
+## Maintenance for GitHub Pages
+
+- Set `homepage` in `package.json`
+- Use `gh-pages` : `$ npm run deploy` (`npm run build && gh-pages -d build`)
+- In development, set `PUBLIC_URL` environment variable to override `homepage` value
+
+
 ## How To Use on CLI
 
 ```sh
