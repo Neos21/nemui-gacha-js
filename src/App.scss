@@ -1,0 +1,123 @@
+$padding-side: 1rem;
+$padding-row : 3rem;
+
+@mixin box {
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+.app {
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  text-align: center;
+}
+
+header {
+  @include box;
+  
+  padding: $padding-row 0;
+  
+  h1 {
+    margin-bottom: 0;
+    font-size: 2.75rem;
+  }
+}
+
+main {
+  @include box;
+  
+  padding: 0 $padding-side $padding-row;
+  
+  &.loading {
+    align-self: center;
+  }
+}
+
+.input-form {
+  margin-bottom: $padding-row;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  font-size: 2rem;
+  
+  .input {
+    width: 100%;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+    padding: 0 .5rem;
+    outline: 0;
+    
+    &:hover,
+    &:focus {
+      border-bottom-color: #0f9;
+    }
+    
+    &::placeholder {
+      color: #ccc;
+    }
+  }
+  
+  .gacha {
+    padding: 0 .5rem;
+    white-space: nowrap;
+  }
+}
+
+.submit {
+  border: 0;
+  border-radius: 4px;
+  padding: .75rem 3rem;
+  color: #fff;
+  font-size: 1.75rem;
+  background: #0b8;
+  outline: 0;
+  
+  &:hover,
+  &:focus {
+    background: #0a7;
+  }
+  
+  &:disabled {
+    background: #999;
+  }
+}
+
+.is-force-negative {
+  position: absolute;
+  top: 0;
+  right: 0;
+  
+  input {
+    outline: 0;
+  }
+}
+
+.result {
+  margin-top: 4rem;
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.error {
+  text-align: left;
+  color: #f00;
+}
+
+footer {
+  background: #012;
+  padding: 1rem $padding-side;
+  
+  .links {
+    $text-colour: #fff;
+    @include box;
+    
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    color: $text-colour;
+    
+    a {
+      color: $text-colour;
+    }
+  }
+}

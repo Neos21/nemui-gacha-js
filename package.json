@@ -5,12 +5,12 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "deploy": "npm run build && gh-pages -d build",
     "cli": "TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\"}' ts-node ./cli/index.ts"
   },
   "author": "Neo <neos21@gmail.com> (http://neo.s21.xrea.com/)",
   "license": "MIT",
-  "// homepage": "https://github.com/Neos21/nemui-gacha-js#readme",
-  "// homepage-property": "If 'homepage' property is set, 'npm start' command will failed.",
+  "homepage": "https://Neos21.github.io/nemui-gacha-js/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Neos21/nemui-gacha-js.git"
@@ -36,7 +36,8 @@
     "@types/kuromoji": "0.1.0",
     "@types/node": "12.12.36",
     "@types/react": "16.9.34",
-    "@types/react-dom": "16.9.6"
+    "@types/react-dom": "16.9.6",
+    "gh-pages": "2.2.0"
   },
   "browserslist": {
     "development": [

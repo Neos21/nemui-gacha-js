@@ -1,2 +1,12 @@
 // Neo's Normalize
 @import '@neos21/neos-normalize/neos-normalize.scss';
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  line-height: 1;
+}

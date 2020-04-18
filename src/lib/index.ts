@@ -3,15 +3,16 @@
  * 
  * @param input 入力文字列
  * @param tokenizer kuromoji の tokenizer
+ * @param isForceNegative true を指定した場合は必ず否定形を返す
  * @return 入力文字列をランダムに否定形にした文字列
  * @throws 引数不正・否定形変換に失敗した場合
  */
-function exec(input: string, tokenizer: { tokenize: Function }): string {
+function exec(input: string, tokenizer: { tokenize: Function }, isForceNegative: boolean = false): string {
   if(input === undefined || input === null || input.trim() === '') {
-    throw new Error('input is null');
+    throw new InvalidArgumentsError('input is null');
   }
   if(tokenizer === undefined || tokenizer === null) {
-    throw new Error('tokenizer is null');
+    throw new InvalidArgumentsError('tokenizer is null');
   }
   
   // トリムする
@@ -24,10 +25,21 @@ function exec(input: string, tokenizer: { tokenize: Function }): string {
   }
   
   // 先に否定形に変換できるかどうか確認する
-  const negative = parseNegative(removedInput, tokenizer);
+  let negative;
+  try {
+    negative = parseNegative(removedInput, tokenizer);
+  }
+  catch(error) {
+    throw new ParseNegativeRuntimeError('Failed to parse negative', error);  // 万が一変換中に例外が発生した場合
+  }
   // 全く変換されていなかったらエラーを返す
   if(removedInput === negative) {
-    throw new Error('Failed to parse negative');
+    throw new ParseNegativeFailedError('Result text is the same as input text');
+  }
+  
+  // 必ず否定形を返す場合
+  if(isForceNegative) {
+    return negative;
   }
   
   // 否定形に変換するかどうかランダムに決める
@@ -146,11 +158,72 @@ function parseNegative(input: string, tokenizer: { tokenize: Function }): string
   return result;
 }
 
+/** ねむいガチャエラー : https://exhikkii.hatenablog.com/entry/2019/05/01/TypeScript_%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%A0%E3%82%A8%E3%83%A9%E3%83%BC%E3%81%AE%E4%BD%9C%E6%88%90%E3%81%AE%E4%BB%95%E6%96%B9 */
+class NemuiGachaError implements Error {
+  /** エラー名 */
+  public name: string = 'NemuiGachaError';
+  
+  /**
+   * コンストラクタ
+   * 
+   * @param message メッセージ
+   */
+  constructor(public message: string) {
+    if(typeof console !== 'undefined') {
+      console.error(`Name: ${this.name} , Message: ${this.message}`);
+    }
+  }
+  
+  /**
+   * To String
+   * 
+   * @return To String
+   */
+  toString() {
+    return `Name: ${this.name} , Message: ${this.message}`;
+  }
+}
+
+/** 引数エラー */
+class InvalidArgumentsError extends NemuiGachaError {
+  /** エラー名 */
+  public name: string = 'InvalidArgumentsError';
+}
+
+/** 否定形変換実行時エラー */
+class ParseNegativeRuntimeError extends NemuiGachaError {
+  /** エラー名 */
+  public name: string = 'ParseNegativeRuntimeError';
+  
+  /**
+   * コンストラクタ
+   * 
+   * @param message メッセージ
+   * @param originalError 元のエラー
+   */
+  constructor(public message: string, public originalError: Error) {
+    super(message);
+    if(typeof console !== 'undefined') {
+      console.error(this.originalError);
+    }
+  }
+}
+
+/** 否定形変換エラー */
+class ParseNegativeFailedError extends NemuiGachaError {
+  /** エラー名 */
+  public name: string = 'ParseNegativeFailedError';
+}
+
 /** nemuiGacha */
 const nemuiGacha = {
   exec,
   removeGacha,
-  parseNegative
+  parseNegative,
+  NemuiGachaError,
+  InvalidArgumentsError,
+  ParseNegativeRuntimeError,
+  ParseNegativeFailedError
 };
 
 export default nemuiGacha;
