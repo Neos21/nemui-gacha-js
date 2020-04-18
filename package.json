@@ -3,7 +3,7 @@
   "private": true,
   "description": "ねむいガチャ.js",
   "scripts": {
-    "start": "react-scripts start",
+    "start": "PUBLIC_URL='.' react-scripts start",
     "build": "react-scripts build",
     "deploy": "npm run build && gh-pages -d build",
     "cli": "TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\"}' ts-node ./cli/index.ts"

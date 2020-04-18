@@ -29,7 +29,7 @@ export default class App extends React.Component {
   /** 初期化処理 : kuromoji の tokenizer を生成する */
   componentWillMount() {
     kuromoji.builder({
-      dicPath: '/dict'  // 予め kuromoji の dict/ ディレクトリを public/ 配下にコピーしておく
+      dicPath: './dict'  // 予め kuromoji の dict/ ディレクトリを public/ 配下にコピーしておく
     }).build((error: Error, tokenizer: kuromoji.Tokenizer<any>) => {  // ジェネリクス http://js.studio-kingdom.com/typescript/handbook/generics
       // XMLHttpRequest でのエラーは try / catch でも補足できずココに到達しなかったため、特に対応しない
       if(error) {
@@ -150,7 +150,7 @@ export default class App extends React.Component {
       <footer>
         <div className="links">
           <span>Author : <a href="http://neo.s21.xrea.com/"  target="_blank" rel="noopener noreferrer">Neo</a></span>
-          <span><a href="https://github.com/Neos21/nemui-gacha-js" target="_blank" rel="noopener noreferrer">GitHub</a></span>
+          <span><a href="https://github.com/Neos21/nemui-gacha-js/" target="_blank" rel="noopener noreferrer">GitHub</a></span>
         </div>
       </footer>
     );

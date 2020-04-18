@@ -3,6 +3,14 @@
 __[Enter This Website.](https://Neos21.github.io/nemui-gacha-js/)__
 
 
+## Query String
+
+- `q` : The words that executed on load
+    - ex. <https://neos21.github.io/nemui-gacha-js/?q=ねむい>
+- `force` : Force parse negative
+    - ex. <https://neos21.github.io/nemui-gacha-js/?q=ねむい&force=true>
+
+
 ## How To Use on CLI
 
 ```sh
