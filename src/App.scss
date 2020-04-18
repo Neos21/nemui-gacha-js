@@ -57,6 +57,10 @@ main {
         background-image: linear-gradient(-45deg, rgba(255, 255, 255, .125) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .125) 50%, rgba(255, 255, 255, .125) 75%, transparent 75%, transparent);
         background-color: #66bb6a;
         animation: progress 2s linear infinite;
+        
+        span {
+          visibility: hidden;
+        }
       }
     }
   }
