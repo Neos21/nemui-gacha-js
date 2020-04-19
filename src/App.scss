@@ -93,10 +93,12 @@ main {
   .gacha {
     padding: 0 .5rem;
     white-space: nowrap;
+    user-select: none;  // テキスト選択をさせない
   }
 }
 
 .submit {
+  margin-bottom: 4rem;
   border: 0;
   border-radius: 4px;
   padding: .75rem 3rem;
@@ -104,6 +106,8 @@ main {
   font-size: 1.75rem;
   background: #0b8;
   outline: 0;
+  cursor: pointer;
+  user-select: none;  // テキスト選択をさせない
   
   &:hover,
   &:focus {
@@ -126,14 +130,23 @@ main {
 }
 
 .result {
-  margin-top: 4rem;
   font-size: 2.5rem;
   font-weight: bold;
 }
 
 .error {
-  text-align: left;
-  color: #f00;
+  $text-colour: #f00;
+  
+  color: $text-colour;
+  font-weight: bold;
+  
+  a {
+    color: #07f;
+    
+    &:hover {
+      color: $text-colour;
+    }
+  }
 }
 
 footer {

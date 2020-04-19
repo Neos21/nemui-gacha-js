@@ -69,6 +69,7 @@ function removeGacha(input: string): string {
  */
 function parseNegative(input: string, tokenizer: { tokenize: Function }): string {
   const parsed = tokenizer.tokenize(input);
+  //console.log(parsed);
   
   // 変換する節の位置と変換したい文字列を控える配列
   const replaces: Array<{ index: number, word: string }> = [];
@@ -126,6 +127,13 @@ function parseNegative(input: string, tokenizer: { tokenize: Function }): string
         }
       }
     }
+    else if(last.surface_form === 'な' && parsed.length >= 2) {  // 「〜〜的 'な'」など
+      const prevIndex = parsed.length - 2;
+      const prev = parsed[prevIndex];
+      if(['副詞', '名詞'].includes(prev.pos)) {
+        replaces.push({ index: lastIndex, word: 'じゃない' });
+      }
+    }
     else if(last.surface_form === 'たい') {
       replaces.push({ index: lastIndex, word: 'たくない' });
     }
@@ -140,6 +148,13 @@ function parseNegative(input: string, tokenizer: { tokenize: Function }): string
     if(last.surface_form === 'て') {
       replaces.push({ index: lastIndex, word: 'ない' });
     }
+    else if(last.surface_form === 'な' && parsed.length >= 2) {  // 「そぞろ 'な'」など
+      const prevIndex = parsed.length - 2;
+      const prev = parsed[prevIndex];
+      if(['副詞', '名詞'].includes(prev.pos)) {
+        replaces.push({ index: lastIndex, word: 'じゃない' });
+      }
+    }
   }
   else if(last.pos === '名詞') {
     if(['固有名詞', '一般', '代名詞'].includes(last.pos_detail_1)) {
@@ -148,6 +163,9 @@ function parseNegative(input: string, tokenizer: { tokenize: Function }): string
     else if(['サ変接続', '接尾'].includes(last.pos_detail_1)) {
       replaces.push({ index: lastIndex, word: last.surface_form + 'しない' });
     }
+  }
+  else if(last.pos === '副詞') {
+    replaces.push({ index: lastIndex, word: last.surface_form + 'じゃない' });
   }
   
   // 変換する

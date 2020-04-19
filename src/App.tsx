@@ -6,6 +6,7 @@ import nemuiGacha from './lib/index';
 
 import './App.scss';
 
+/** アプリ */
 export default class App extends React.Component {
   /** State : エラー回避のため型定義のみしておく */
   state: Readonly<any>;
@@ -21,8 +22,10 @@ export default class App extends React.Component {
       input          : 'ねむい',  // 入力文字列
       tokenizer      : null,      // kuromoji が生成する tokenizer を控える
       isForceNegative: false,     // 必ず否定形に変換するかどうか
+      isDisabled     : true,      // 「ガチャ」ボタンを非活性にするかどうか
       result         : '',        // 結果文字列
-      error          : ''         // エラー発生時に値を入れる
+      error          : '',        // エラー発生時に値を入れる
+      errorFailed    : false      // 否定形変換ができなかった文言があった時は error は空文字のままコレを true にする
     };
   }
   
@@ -37,7 +40,8 @@ export default class App extends React.Component {
       }
       
       this.setState({
-        tokenizer: tokenizer
+        tokenizer : tokenizer,
+        isDisabled: false  // 活性化する
       });
       
       // クエリストリングが存在した場合は初期処理を行う
@@ -76,7 +80,8 @@ export default class App extends React.Component {
    */
   onChangeText = (event: React.ChangeEvent<HTMLInputElement>) => {  // 型定義 : https://qiita.com/natsuhiko/items/5d2a526a217e05162a0a
     this.setState({
-      input: event.target.value
+      input     : event.target.value,
+      isDisabled: !event.target.value.trim(),
     });
   }
   
@@ -98,44 +103,65 @@ export default class App extends React.Component {
    */
   onSubmit = (event: React.FormEvent) => {
     event.preventDefault();  // https://react.keicode.com/basics/react-form-basics.php
-    this.setState({
-      result: '',
-      error: ''
-    });
     this.exec();
   }
   
   /** ガチャを実行する */
   exec() {
+    this.setState({
+      isDisabled : true,  // 非活性にする
+      result     : '',
+      error      : '',
+      errorFailed: false
+    });
+    
     if(!this.state.input.trim()) {
       this.setState({
-        error: 'Please input text'
+        isDisabled: false,
+        error     : 'Please input text'
       });
       return;
     }
     
+    let result = '';
     try {
-      const result = nemuiGacha.exec(this.state.input, this.state.tokenizer, this.state.isForceNegative);
-      this.setState({
-        result: result
-      });
+      result = nemuiGacha.exec(this.state.input, this.state.tokenizer, this.state.isForceNegative);
     }
     catch(error) {
-      if(error instanceof nemuiGacha.InvalidArgumentsError || error instanceof nemuiGacha.ParseNegativeFailedError) {
+      if(error instanceof nemuiGacha.InvalidArgumentsError) {
         this.setState({
-          error: error.message
+          isDisabled: false,
+          error     : error.message
         });
       }
       else if(error instanceof nemuiGacha.ParseNegativeRuntimeError) {
         this.setState({
-          error: '(Runtime Error) ' + error.message
+          isDisabled: false,
+          error     : '(Runtime Error) ' + error.message
+        });
+      }
+      else if(error instanceof nemuiGacha.ParseNegativeFailedError) {
+        this.setState({
+          isDisabled : false,
+          errorFailed: true
         });
       }
       else {
         this.setState({
-          error: 'Unexpected Error'
+          isDisabled: false,
+          error     : 'Unexpected Error'
         });
       }
+      return;
+    }
+    
+    if(result) {
+      setTimeout(() => {
+        this.setState({
+          isDisabled: false,
+          result    : result
+        });
+      }, 250);
     }
   }
   
@@ -149,7 +175,7 @@ export default class App extends React.Component {
     const footer = (
       <footer>
         <div className="links">
-          <span>Author : <a href="http://neo.s21.xrea.com/"  target="_blank" rel="noopener noreferrer">Neo</a></span>
+          <span>Author : <a href="http://neo.s21.xrea.com/" target="_blank" rel="noopener noreferrer">Neo</a></span>
           <span><a href="https://github.com/Neos21/nemui-gacha-js/" target="_blank" rel="noopener noreferrer">GitHub</a></span>
         </div>
       </footer>
@@ -179,7 +205,7 @@ export default class App extends React.Component {
               <span className="gacha">ガチャ</span>
             </div>
             <div>
-              <button type="submit" className="submit" onClick={this.onSubmit} disabled={!this.state.input.trim()}>ガチャ</button>
+              <button type="submit" className="submit" onClick={this.onSubmit} disabled={this.state.isDisabled}>ガチャ</button>
             </div>
             <div className="is-force-negative">
               <input type="checkbox" tabIndex={-1} checked={this.state.isForceNegative} onChange={this.onChangeCheckbox} />
@@ -190,6 +216,12 @@ export default class App extends React.Component {
           }
           { this.state.error &&
             <div className="error">Error : {this.state.error}</div>
+          }
+          { this.state.errorFailed &&
+            <div className="error">
+              <p>うまく否定形に変換できませんでした…。</p>
+              <p><a href={'https://github.com/Neos21/nemui-gacha-js/issues/new?template=bug-report.md&title=' + this.state.input} target="_blank" rel="noopener noreferrer">GitHub で報告する</a></p>
+            </div>
           }
         </main>
         {footer}
