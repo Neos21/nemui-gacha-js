@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "ffa51a1d2c2b18efbbf2016605144dc1",
+    "revision": "e03a8eabccabe0105e2c6bc9b5953594",
     "url": "/nemui-gacha-js/index.html"
   },
   {
-    "revision": "5f7fd9ca0077f42e169b",
+    "revision": "9bf4a7d88c376a80ae72",
     "url": "/nemui-gacha-js/static/css/main.51dc3846.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/nemui-gacha-js/static/js/2.74999597.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "5f7fd9ca0077f42e169b",
-    "url": "/nemui-gacha-js/static/js/main.c4ad7460.chunk.js"
+    "revision": "9bf4a7d88c376a80ae72",
+    "url": "/nemui-gacha-js/static/js/main.06a8d5bf.chunk.js"
   },
   {
     "revision": "b0684a11fbd16d0893f8",
