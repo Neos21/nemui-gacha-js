@@ -127,6 +127,13 @@ function parseNegative(input: string, tokenizer: { tokenize: Function }): string
         }
       }
     }
+    else if(last.surface_form === 'だ' && parsed.length >= 2) {  // 「きれい 'だ'」など
+      const prevIndex = parsed.length - 2;
+      const prev = parsed[prevIndex];
+      if(['副詞', '名詞'].includes(prev.pos)) {
+        replaces.push({ index: lastIndex, word: 'じゃない' });
+      }
+    }
     else if(last.surface_form === 'な' && parsed.length >= 2) {  // 「〜〜的 'な'」など
       const prevIndex = parsed.length - 2;
       const prev = parsed[prevIndex];
@@ -166,6 +173,11 @@ function parseNegative(input: string, tokenizer: { tokenize: Function }): string
   }
   else if(last.pos === '副詞') {
     replaces.push({ index: lastIndex, word: last.surface_form + 'じゃない' });
+  }
+  else if(last.pos === '連体詞') {
+    if(last.surface_form.endsWith('な')) {  // 「大き 'な'」など
+      replaces.push({ index: lastIndex, word: last.surface_form + 'わけない' });
+    }
   }
   
   // 変換する
