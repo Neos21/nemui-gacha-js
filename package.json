@@ -1,14 +1,14 @@
 {
   "name": "nemui-gacha-js",
-  "private": true,
   "description": "ねむいガチャ.js",
+  "private": true,
   "scripts": {
     "start": "PUBLIC_URL='.' react-scripts start",
     "build": "react-scripts build",
     "deploy": "npm run build && gh-pages -d build",
     "cli": "TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\"}' ts-node ./cli/index.ts"
   },
-  "author": "Neo <neos21@gmail.com> (http://neo.s21.xrea.com/)",
+  "author": "Neo <neos21@gmail.com> (https://neos21.net/)",
   "license": "MIT",
   "homepage": "https://Neos21.github.io/nemui-gacha-js/",
   "repository": {
