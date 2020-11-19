@@ -51,16 +51,6 @@ Based on [nemui-gacha](https://github.com/Neos21/nemui-gacha) made with Python a
 If you have a bug or a feature request, [Please open a new issue.](https://github.com/Neos21/nemui-gacha-js/issues/new/choose)
 
 
-## Author
-
-[Neo](http://neo.s21.xrea.com/)
-
-
 ## Links
 
-- [Neo's World](http://neo.s21.xrea.com/)
-- [Corredor](https://neos21.hatenablog.com/)
-- [Murga](https://neos21.hatenablog.jp/)
-- [El Mylar](https://neos21.hateblo.jp/)
-- [Neo's GitHub Pages](https://neos21.github.io/)
-- [GitHub - Neos21](https://github.com/Neos21/)
+- [Neo's World](https://neos21.net/)
