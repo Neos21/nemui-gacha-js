@@ -175,8 +175,8 @@ export default class App extends React.Component {
     const footer = (
       <footer>
         <div className="links">
-          <span>Author : <a href="http://neo.s21.xrea.com/" target="_blank" rel="noopener noreferrer">Neo</a></span>
-          <span><a href="https://github.com/Neos21/nemui-gacha-js/" target="_blank" rel="noopener noreferrer">GitHub</a></span>
+          <span>Author : <a href="https://neos21.net/" target="_blank" rel="noopener noreferrer">Neo</a></span>
+          <span><a href="https://github.com/Neos21/nemui-gacha-js" target="_blank" rel="noopener noreferrer">GitHub</a></span>
         </div>
       </footer>
     );
