@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/nemui-gacha-js/precache-manifest.0e82c33d6d9c3de1b6bd495787c36d7d.js"
+  "/nemui-gacha-js/precache-manifest.336f97a6cbdfa5afc6221c803254de3a.js"
 );
 
 self.addEventListener('message', (event) => {
