@@ -17,7 +17,7 @@ function exec(input: string, tokenizer: { tokenize: Function }, isForceNegative:
   
   // トリムする
   input = input.trim();
-  // 末尾に「ガチャ」の文字列が遭ったら除去する
+  // 末尾に「ガチャ」の文字列があったら除去する
   const removedInput = removeGacha(input);
   // 「ガチャ」としか書かれていなかったら終わり
   if(removedInput === '') {
